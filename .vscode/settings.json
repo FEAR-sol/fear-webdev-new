@@ -1,0 +1,25 @@
+{
+    "javascript.autoClosingTags": false,
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "css.lint.unknownAtRules": "ignore",
+    "tailwindCSS.includeLanguages": {
+        "javascript": "javascript",
+        "html": "HTML"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "files.associations": {
+        "*.css": "postcss"
+    },
+    "emmet.includeLanguages": {
+        "postcss": "css"
+    },
+    "tailwindCSS.experimental.classRegex": [
+        "class[Name]*\\s*[:=]\\s*[\"']([^\"']*)[\"']",
+        "className\\s*[:=]\\s*[\"']([^\"']*)[\"']",
+        "\\bclass\\s*=\\s*[\"']([^\"']*)[\"']"
+    ]
+}
