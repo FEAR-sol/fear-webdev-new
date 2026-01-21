@@ -211,7 +211,7 @@ const Navbar = () => {
             {/* Back to Home Button */}
             <motion.div variants={itemVariants}>
               <motion.a
-                href="#home"
+                href="https://www.fearagency.in/"
                 onClick={(e) => handleNavClick(e, '#home')}
                 className="px-6 py-2 rounded-full text-sm font-bold tracking-wider transition-all duration-300 border-2 cursor-pointer"
                 style={{ 
