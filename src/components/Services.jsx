@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { TextReveal, StaggeredReveal, AnimatedCounter, FadeIn, ScaleIn } from './AnimationUtils';
+import { FadeIn } from './AnimationUtils';
 
 const Services = () => {
   const services = [
@@ -265,7 +265,7 @@ const Services = () => {
           </FadeIn>
           
           <FadeIn delay={0.6}>
-            <p className="text-base lg:text-lg font-light max-w-2xl mx-auto leading-relaxed" style={{ color: '#666666' }}>
+            <p className="text-base lg:text-lg font-light max-w-2xl mx-auto leading-relaxed text-justify" style={{ color: '#666666' }}>
               From concept to launch, we deliver exceptional digital experiences that drive growth and engagement
             </p>
           </FadeIn>
@@ -273,24 +273,23 @@ const Services = () => {
 
         {/* Premium Services Cards Grid */}
         <motion.div
-          className="flex justify-center items-start gap-4 lg:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 services-grid"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, threshold: 0.1 }}
         >
-          <div className="flex gap-4 lg:gap-6 w-full max-w-7xl justify-center">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.id}
-                className="group relative w-full max-w-[280px] h-[400px] flex-shrink-0"
-                variants={cardVariants}
-                whileHover={{ 
-                  scale: 1.02,
-                  y: -8,
-                  transition: { duration: 0.3 }
-                }}
-              >
+          {services.map((service, index) => (
+            <motion.div
+              key={service.id}
+              className="group relative w-full h-[400px] sm:h-[400px] service-card-mobile flex-shrink-0"
+              variants={cardVariants}
+              whileHover={{ 
+                scale: 1.02,
+                y: -8,
+                transition: { duration: 0.3 }
+              }}
+            >
                 {/* Enhanced Card Shadow */}
                 <motion.div 
                   className="absolute inset-0 transform translate-x-3 translate-y-3 rounded-3xl opacity-15" 
@@ -350,7 +349,7 @@ const Services = () => {
                   </div>
 
                   <motion.h3 
-                    className="text-xl font-black mb-3 leading-tight tracking-tight" 
+                    className="text-xl lg:text-xl font-black mb-3 leading-tight tracking-tight service-card-title" 
                     style={{ color: '#000000' }}
                     whileHover={{ color: '#452F2F' }}
                     transition={{ duration: 0.3 }}
@@ -358,7 +357,7 @@ const Services = () => {
                     {service.title}
                   </motion.h3>
                   
-                  <p className="text-sm mb-6 leading-relaxed font-light flex-grow" style={{ color: '#555555' }}>
+                  <p className="text-sm mb-6 leading-relaxed font-light flex-grow text-justify" style={{ color: '#555555' }}>
                     {service.description}
                   </p>
 
@@ -415,7 +414,6 @@ const Services = () => {
                 </motion.div>
               </motion.div>
             ))}
-          </div>
         </motion.div>
 
       </div>

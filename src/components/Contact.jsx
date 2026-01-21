@@ -18,9 +18,18 @@ const Contact = () => {
 
   // Initialize EmailJS when component mounts
   useEffect(() => {
+    // Only initialize if we have the public key
+    if (!EMAILJS_PUBLIC_KEY) {
+      // Silently skip EmailJS initialization in development
+      if (process.env.NODE_ENV === 'development') {
+        console.info('EmailJS not configured. Contact form will show a demo message.');
+      }
+      return;
+    }
+
     // Try initializing EmailJS
     try {
-      console.log('Initializing EmailJS with key:', EMAILJS_PUBLIC_KEY);
+      console.log('Initializing EmailJS...');
       
       // Initialize EmailJS properly
       emailjs.init({
@@ -31,7 +40,7 @@ const Contact = () => {
     } catch (error) {
       console.error('Failed to initialize EmailJS:', error);
     }
-  }, []);
+  }, [EMAILJS_PUBLIC_KEY]);
 
   const handleChange = (e) => {
     setFormData({
@@ -44,6 +53,27 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus(null);
+
+    // Check if EmailJS is properly configured
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      // Show demo success message in development
+      if (process.env.NODE_ENV === 'development') {
+        console.info('Demo mode: Contact form submitted successfully (EmailJS not configured)');
+        setSubmitStatus('success');
+        
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        console.error('EmailJS not properly configured. Missing environment variables.');
+        setSubmitStatus('error');
+      }
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // Prepare template parameters with your template's variable names
@@ -103,15 +133,6 @@ const Contact = () => {
     {
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-        </svg>
-      ),
-      title: "Phone Numbers",
-      value: "+91 81256 44388 / +91 91087 53694"
-    },
-    {
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
@@ -137,7 +158,7 @@ const Contact = () => {
       url: "https://www.instagram.com/fear_agency/",
       icon: (
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.004 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.418-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.928.875 1.418 2.026 1.418 3.323s-.49 2.448-1.418 3.244c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.781c-.315 0-.595-.122-.807-.315-.21-.21-.315-.49-.315-.807s.105-.595.315-.807c.21-.21.49-.315.807-.315s.595.105.807.315c.21.21.315.49.315.807s-.105.595-.315.807c-.21.193-.49.315-.807.315zm-4.262 1.05c-1.61 0-2.917 1.307-2.917 2.917s1.307 2.917 2.917 2.917 2.917-1.307 2.917-2.917-1.307-2.917-2.917-2.917z"/>
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
         </svg>
       )
     },
@@ -237,7 +258,7 @@ const Contact = () => {
                 <h3 className="text-2xl lg:text-3xl font-black mb-4 leading-tight" style={{ color: '#000000' }}>
                   Send us a Message
                 </h3>
-                <p className="text-base lg:text-lg font-light leading-relaxed" style={{ color: '#555555' }}>
+                <p className="text-base lg:text-lg font-light leading-relaxed text-justify" style={{ color: '#555555' }}>
                   Fill out the form below and we'll get back to you as soon as possible.
                 </p>
               </div>
@@ -254,7 +275,12 @@ const Contact = () => {
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      <span className="font-bold">Message sent successfully! We'll get back to you soon.</span>
+                      <span className="font-bold">
+                        {(!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) && process.env.NODE_ENV === 'development' 
+                          ? 'Demo: Form submitted successfully! (Configure EmailJS for real emails)'
+                          : 'Message sent successfully! We\'ll get back to you soon.'
+                        }
+                      </span>
                     </div>
                   </div>
                 )}
@@ -426,7 +452,7 @@ const Contact = () => {
                         <h4 className="text-lg font-black mb-2 leading-tight" style={{ color: '#000000' }}>
                           {info.title}
                         </h4>
-                        <p className="text-lg font-bold mb-1" style={{ color: '#452F2F' }}>
+                        <p className="text-lg lg:text-lg font-bold mb-1 contact-value-text break-all sm:break-normal" style={{ color: '#452F2F' }}>
                           {info.value}
                         </p>
                         <p className="text-sm font-light" style={{ color: '#666666' }}>
@@ -502,7 +528,7 @@ const Contact = () => {
                 </div>
 
                 <div className="text-center mt-6 pt-4" style={{ borderTop: '1px solid rgba(69, 47, 47, 0.1)' }}>
-                  <p className="text-sm font-light leading-relaxed" style={{ color: '#555555' }}>
+                  <p className="text-sm font-light leading-relaxed text-justify" style={{ color: '#555555' }}>
                     Connect with us for behind-the-scenes content, design tips, and project showcases
                   </p>
                 </div>

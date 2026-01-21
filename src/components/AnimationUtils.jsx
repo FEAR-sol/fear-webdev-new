@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useAnimation, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 
 // Enhanced Intersection Observer Hook for scroll animations
 export const useScrollAnimation = (options = {}) => {
@@ -112,53 +112,12 @@ export const ScrollProgress = () => {
     >
       <motion.div 
         className="scroll-progress-bar" 
-        style={{ scaleX: scrollYProgress }}
-        transformOrigin="0%"
+        style={{ 
+          scaleX: scrollYProgress,
+          transformOrigin: "0%"
+        }}
       />
     </motion.div>
-  );
-};
-
-// Enhanced Floating Action Button
-export const FloatingActionButton = ({ onClick, children, hideOnTop = true }) => {
-  const [isVisible, setIsVisible] = useState(!hideOnTop);
-
-  useEffect(() => {
-    if (!hideOnTop) return;
-
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 300);
-    };
-
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
-  }, [hideOnTop]);
-
-  return (
-    <motion.button
-      className="fab"
-      onClick={onClick}
-      aria-label="Scroll to top"
-      initial={{ scale: 0, rotate: -180 }}
-      animate={{ 
-        scale: isVisible ? 1 : 0,
-        rotate: isVisible ? 0 : -180,
-        y: isVisible ? 0 : 100
-      }}
-      whileHover={{ 
-        scale: 1.1, 
-        y: -4,
-        boxShadow: "0 12px 40px rgba(59, 130, 246, 0.4)"
-      }}
-      whileTap={{ scale: 0.95 }}
-      transition={{
-        type: "spring",
-        stiffness: 260,
-        damping: 20
-      }}
-    >
-      {children}
-    </motion.button>
   );
 };
 
@@ -378,7 +337,7 @@ export const ProgressBar = ({ progress, className = '', label = '' }) => {
             delay: 0.2,
             ease: [0.4, 0, 0.2, 1]
           }}
-          transformOrigin="left"
+          style={{ transformOrigin: "left" }}
         />
       </div>
     </div>
@@ -460,11 +419,10 @@ export const ScaleIn = ({ children, delay = 0, className = '' }) => {
   );
 };
 
-export default {
+const AnimationUtilsExports = {
   useScrollAnimation,
   CustomCursor,
   ScrollProgress,
-  FloatingActionButton,
   AnimatedCounter,
   TextReveal,
   StaggeredReveal,
@@ -476,3 +434,5 @@ export default {
   FadeIn,
   ScaleIn
 };
+
+export default AnimationUtilsExports;

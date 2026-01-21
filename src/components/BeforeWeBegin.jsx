@@ -88,7 +88,7 @@ const BeforeWeBegin = () => {
           <TextReveal delay={400}>
             <div className="flex items-center justify-center gap-6 mb-8">
               <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent" style={{ color: '#452F2F' }}></div>
-              <p className="text-xl lg:text-2xl font-medium tracking-wide max-w-4xl leading-relaxed" style={{ color: '#452F2F' }}>
+              <p className="text-xl lg:text-2xl font-medium tracking-wide max-w-4xl leading-relaxed text-justify" style={{ color: '#452F2F' }}>
                 To ensure a smooth and successful collaboration, we believe in clarity, transparency, and shared expectations from day one.
               </p>
               <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-current to-transparent" style={{ color: '#452F2F' }}></div>
@@ -132,7 +132,7 @@ const BeforeWeBegin = () => {
                   </div>
                 </div>
                 
-                <p className="text-base lg:text-lg leading-relaxed font-light" style={{ color: '#555555' }}>
+                <p className="text-base lg:text-lg leading-relaxed font-light text-justify" style={{ color: '#555555' }}>
                   {requirement.description}
                 </p>
 
@@ -168,7 +168,7 @@ const BeforeWeBegin = () => {
             </div>
             
             {/* Additional Note */}
-            <p className="mt-8 text-base lg:text-lg font-light max-w-3xl mx-auto leading-relaxed" style={{ color: '#666666' }}>
+            <p className="mt-8 text-base lg:text-lg font-light max-w-3xl mx-auto leading-relaxed text-justify" style={{ color: '#666666' }}>
               Following these guidelines ensures we deliver exceptional results on time and within budget, creating a partnership built on mutual understanding and success.
             </p>
           </div>

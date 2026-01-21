@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { TextReveal, FadeIn, ScaleIn, ParallaxElement, AnimatedCounter } from './AnimationUtils';
+import { motion } from 'framer-motion';
+import { TextReveal, FadeIn, ParallaxElement, AnimatedCounter } from './AnimationUtils';
 
 const Hero = () => {
   useEffect(() => {
@@ -272,7 +272,7 @@ const Hero = () => {
             </motion.div>
             
             <TextReveal delay={300}>
-              <p className="text-lg leading-relaxed max-w-xl font-light" style={{ color: '#424242' }}>
+              <p className="text-lg leading-relaxed max-w-xl font-light text-justify" style={{ color: '#424242' }}>
                 Crafting digital experiences that transcend expectations. Modern, conversion-focused designs 
                 that reflect your brand identity and deliver seamless user experiences across all platforms.
               </p>

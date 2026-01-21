@@ -11,8 +11,7 @@ import LoadingPage from './components/LoadingPage';
 import Footer from './components/Footer';
 
 import { 
-  ScrollProgress, 
-  FloatingActionButton 
+  ScrollProgress
 } from './components/AnimationUtils';
 
 function App() {
@@ -48,10 +47,6 @@ function App() {
     setIsLoading(false);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   if (isLoading) {
     return <LoadingPage onLoadingComplete={handleLoadingComplete} />;
   }
@@ -78,12 +73,6 @@ function App() {
       <div id="contact">
         <Contact />
       </div>
-      
-      <FloatingActionButton onClick={scrollToTop}>
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </FloatingActionButton>
       
       <Footer />
     </div>

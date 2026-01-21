@@ -112,7 +112,7 @@ const FAQ = () => {
               <div className={`overflow-hidden transition-all duration-500 ${openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
                 <div className="px-8 pb-6">
                   <div className="w-full h-px mb-4" style={{ backgroundColor: 'rgba(69, 47, 47, 0.1)' }}></div>
-                  <p className="text-base lg:text-lg leading-relaxed font-light" style={{ color: '#555555' }}>
+                  <p className="text-base lg:text-lg leading-relaxed font-light text-justify" style={{ color: '#555555' }}>
                     {faq.answer}
                   </p>
                 </div>

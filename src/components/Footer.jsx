@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Chatbot from './Chatbot';
 
 const Footer = () => {
   const handleTermsClick = () => {
@@ -92,6 +93,16 @@ const Footer = () => {
             >
               © 2026 FEAR
             </motion.div>
+          </motion.div>
+
+          {/* Center - Chatbot */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <Chatbot />
           </motion.div>
 
           {/* Right Side - Terms and Conditions */}

@@ -1,8 +1,10 @@
 /* postcss-custom-properties */
 /* This file uses Tailwind CSS directives */
+/* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
 
 /* Global Animation Styles */
 * {
@@ -35,44 +37,18 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.1);
-  z-index: 1000;
+  height: 4px;
+  background: rgba(69, 47, 47, 0.1);
+  z-index: 9999;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .scroll-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-  transition: width 0.1s ease-out;
-}
-
-/* Floating Action Button */
-.fab {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
-  backdrop-filter: blur(10px);
-}
-
-.fab:hover {
-  transform: translateY(-4px) scale(1.1);
-  box-shadow: 0 12px 40px rgba(59, 130, 246, 0.4);
-}
-
-.fab.hidden {
-  opacity: 0;
-  transform: translateY(100px) scale(0.8);
-  pointer-events: none;
+  background: linear-gradient(90deg, #452F2F, #6B4E4E);
+  width: 0%;
+  transition: width 0.1s ease;
+  transform-origin: 0% 50%;
 }
 
 /* Card Page Animation Styles */
@@ -1478,54 +1454,6 @@ html {
   100% { background-position: -200% 0; }
 }
 
-/* Floating Action Button */
-.fab {
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: #452F2F;
-  color: white;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 25px rgba(69, 47, 47, 0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.fab:hover {
-  transform: scale(1.1) translateY(-2px);
-  box-shadow: 0 12px 35px rgba(69, 47, 47, 0.4);
-}
-
-.fab.hidden {
-  transform: translateY(100px);
-  opacity: 0;
-}
-
-/* Scroll Progress Indicator */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: rgba(69, 47, 47, 0.1);
-  z-index: 9999;
-}
-
-.scroll-progress-bar {
-  height: 100%;
-  background: linear-gradient(90deg, #452F2F, #6B4E4E);
-  width: 0%;
-  transition: width 0.1s ease;
-}
-
 /* Enhanced Hover Effects */
 .hover-underline {
   position: relative;
@@ -1597,3 +1525,547 @@ html {
   transform: translateY(0);
 }
 
+/* Additional Mobile Fixes */
+@media (max-width: 768px) {
+  /* Services Grid Mobile Fix */
+  .services-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+  
+  /* Projects Grid Mobile Fix */
+  .projects-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+  
+  /* Project Images Mobile Optimization */
+  .projects-grid img {
+    object-fit: cover !important;
+    object-position: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  /* Contact Email Overflow Fix */
+  .contact-email {
+    word-break: break-all;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Navbar Mobile Spacing */
+  .navbar-mobile-menu {
+    padding: 1rem;
+  }
+  
+  /* Card Heights Mobile */
+  .service-card-mobile {
+    height: auto !important;
+    min-height: 350px;
+  }
+  
+  /* Project Card Mobile Optimization */
+  .project-card-mobile {
+    height: auto !important;
+    min-height: 400px;
+  }
+  
+  /* Project Image Container Mobile */
+  .project-image-container {
+    height: 200px !important;
+    min-height: 200px !important;
+  }
+  
+  /* Text Sizing Mobile */
+  .mobile-text-responsive {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Extra small screens */
+  .contact-value-text {
+    font-size: 1rem !important;
+    word-break: break-all;
+  }
+  
+  .service-card-title {
+    font-size: 1.25rem !important;
+  }
+  
+  .project-card-title {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Project Images Extra Small Screens */
+  .projects-grid img {
+    height: 180px !important;
+    min-height: 180px !important;
+  }
+  
+  /* Project Content Padding */
+  .project-content-mobile {
+    padding: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Very small screens */
+  .projects-grid {
+    gap: 1.5rem !important;
+  }
+  
+  .project-card-title {
+    font-size: 1.125rem !important;
+  }
+  
+  /* Project Images Very Small Screens */
+  .projects-grid img {
+    height: 160px !important;
+    min-height: 160px !important;
+  }
+}
+
+/* Image Loading and Performance */
+.projects-grid img {
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+
+.projects-grid img:hover {
+  transform: scale(1.05);
+}
+
+/* Prevent image overflow on mobile */
+@media (max-width: 768px) {
+  .projects-grid img:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Extra small screens */
+  .contact-value-text {
+    font-size: 1rem !important;
+    word-break: break-all;
+  }
+  
+  .service-card-title {
+    font-size: 1.25rem !important;
+  }
+  
+  .project-card-title {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Project Images Extra Small Screens */
+  .projects-grid img {
+    height: 180px !important;
+    min-height: 180px !important;
+  }
+  
+  /* Project Content Padding */
+  .project-content-mobile {
+    padding: 1rem !important;
+  }
+  
+  /* Mobile Text Responsive */
+  .mobile-text-responsive {
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+  }
+}
+/* Mobile Menu Improvements */
+.mobile-menu-container {
+  position: relative;
+  z-index: 50;
+}
+
+/* Ensure mobile menu is above other content */
+@media (max-width: 768px) {
+  .mobile-menu-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Improve mobile menu item spacing */
+  .mobile-nav-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .mobile-nav-item:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: translateX(0.5rem);
+  }
+  
+  /* Mobile menu button improvements */
+  .mobile-menu-button {
+    z-index: 51;
+    position: relative;
+  }
+}
+
+/* Smooth scrolling for all anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure sections have proper spacing for navbar */
+section {
+  scroll-margin-top: 120px;
+}
+
+#home, #services, #projects, #contact {
+  scroll-margin-top: 120px;
+}
+/* Text Justification Improvements */
+.text-justify {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+}
+
+/* Better text justification on mobile */
+@media (max-width: 640px) {
+  .text-justify {
+    text-align: left; /* Fall back to left alignment on very small screens */
+  }
+}
+
+@media (min-width: 641px) {
+  .text-justify {
+    text-align: justify;
+  }
+}
+
+/* Improve readability with justified text */
+.text-justify {
+  word-spacing: 0.1em;
+  letter-spacing: 0.01em;
+}
+/* App Container Positioning for Scroll Tracking */
+.App {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Ensure proper scroll container for framer-motion */
+html, body {
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Fix scroll tracking warnings */
+body {
+  position: relative;
+}
+/* Chatbot Styles - Footer positioning with enhanced z-index */
+.chatbot-container {
+  position: relative;
+  z-index: 50;
+}
+
+.chatbot-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(69, 47, 47, 0.3);
+  position: relative;
+  z-index: 51;
+}
+
+.chatbot-button:hover {
+  box-shadow: 0 12px 40px rgba(69, 47, 47, 0.4);
+}
+
+.chatbot-window {
+  box-shadow: 0 25px 50px rgba(69, 47, 47, 0.25) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(69, 47, 47, 0.1) !important;
+  z-index: 99999 !important;
+  position: fixed !important;
+}
+
+/* Enhanced chatbot button pulse effect */
+.chatbot-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #452F2F, #6B4E4E, #452F2F);
+  border-radius: 50%;
+  z-index: -1;
+  animation: chatbotPulse 3s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes chatbotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+/* Mobile responsive chatbot */
+@media (max-width: 768px) {
+  .chatbot-window {
+    left: 1rem !important;
+    right: 1rem !important;
+    transform: none !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+  
+  .chatbot-button {
+    width: 56px !important;
+    height: 56px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatbot-window {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+    height: 400px !important;
+  }
+  
+  .chatbot-button {
+    width: 52px !important;
+    height: 52px !important;
+  }
+}
+
+/* Ensure chatbot messages are scrollable */
+.chatbot-messages {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(69, 47, 47, 0.3) rgba(69, 47, 47, 0.1);
+}
+
+.chatbot-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: rgba(69, 47, 47, 0.1);
+  border-radius: 2px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: rgba(69, 47, 47, 0.3);
+  border-radius: 2px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(69, 47, 47, 0.5);
+}
+
+/* Chatbot animations */
+.chatbot-message-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.chatbot-message-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.3s ease-out;
+}
+
+/* Scrollbar for chatbot messages */
+.chatbot-messages::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+  background: rgba(69, 47, 47, 0.1);
+  border-radius: 2px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+  background: rgba(69, 47, 47, 0.3);
+  border-radius: 2px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(69, 47, 47, 0.5);
+}
+
+/* Enhanced chatbot button pulse effect */
+.chatbot-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #452F2F, #6B4E4E, #452F2F);
+  border-radius: 50%;
+  z-index: -1;
+  animation: chatbotPulse 3s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes chatbotPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
+}
+
+/* Chatbot notification badge */
+.chatbot-notification {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  background: #ff4444;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: notificationBounce 2s ease-in-out infinite;
+}
+
+@keyframes notificationBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-4px);
+  }
+  60% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Chatbot typing indicator enhancement */
+.chatbot-typing-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.chatbot-typing-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #452F2F;
+  animation: typingDots 1.4s ease-in-out infinite both;
+}
+
+.chatbot-typing-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.chatbot-typing-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.chatbot-typing-dots .dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes typingDots {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Chatbot quick actions enhancement */
+.chatbot-quick-action {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.chatbot-quick-action::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(69, 47, 47, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.chatbot-quick-action:hover::before {
+  left: 100%;
+}
+
+/* Chatbot message animations */
+.chatbot-message {
+  animation: messageSlideIn 0.3s ease-out;
+}
+
+.chatbot-message.user {
+  animation: messageSlideInRight 0.3s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes messageSlideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+/* Ensure chatbot works on all screen sizes */
+@media (max-width: 1024px) {
+  .chatbot-window {
+    width: 360px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .chatbot-window {
+    width: calc(100vw - 2rem) !important;
+    max-width: 340px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .chatbot-window {
+    width: calc(100vw - 1rem) !important;
+    right: 0.5rem !important;
+    left: 0.5rem !important;
+  }
+  
+  .chatbot-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+}

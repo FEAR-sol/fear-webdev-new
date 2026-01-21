@@ -10,9 +10,44 @@ const Navbar = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
+    // Close mobile menu when clicking outside
+    const handleClickOutside = (event) => {
+      if (isMobileMenuOpen && !event.target.closest('.mobile-menu-container')) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    // Close mobile menu with ESC key
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isMobileMenuOpen]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
 
   const navItems = [
     { href: '#home', label: 'HOME' },
@@ -20,6 +55,26 @@ const Navbar = () => {
     { href: '#projects', label: 'PROJECTS' },
     { href: '#contact', label: 'CONTACT' }
   ];
+
+  // Handle navigation click with smooth scrolling
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false); // Close mobile menu
+    
+    // Small delay to allow menu to close before scrolling
+    setTimeout(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        const navbarHeight = 120; // Account for fixed navbar height
+        const targetPosition = target.offsetTop - navbarHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  };
 
   const navVariants = {
     hidden: { y: -100, opacity: 0 },
@@ -99,7 +154,7 @@ const Navbar = () => {
       initial="hidden"
       animate="visible"
     >
-      <div className="max-w-7xl mx-auto px-8 py-2.5">
+      <div className="max-w-7xl mx-auto px-8 py-2.5 mobile-menu-container">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div 
@@ -124,14 +179,15 @@ const Navbar = () => {
           
           {/* Desktop Menu */}
           <motion.div 
-            className="hidden md:flex items-center gap-12"
+            className="hidden md:flex items-center gap-8"
             variants={menuVariants}
           >
             {navItems.map((item, index) => (
               <motion.div key={item.href} variants={itemVariants}>
                 <motion.a
                   href={item.href}
-                  className="nav-item text-sm font-medium tracking-wider transition-all duration-300 relative group"
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  className="nav-item text-sm font-medium tracking-wider transition-all duration-300 relative group cursor-pointer"
                   style={{ color: '#000000' }}
                   whileHover={{ 
                     scale: 1.05,
@@ -151,11 +207,33 @@ const Navbar = () => {
                 </motion.a>
               </motion.div>
             ))}
+            
+            {/* Back to Home Button */}
+            <motion.div variants={itemVariants}>
+              <motion.a
+                href="#home"
+                onClick={(e) => handleNavClick(e, '#home')}
+                className="px-6 py-2 rounded-full text-sm font-bold tracking-wider transition-all duration-300 border-2 cursor-pointer"
+                style={{ 
+                  backgroundColor: '#452F2F',
+                  color: '#FFFFFF',
+                  borderColor: '#452F2F'
+                }}
+                whileHover={{ 
+                  scale: 1.05,
+                  backgroundColor: 'transparent',
+                  color: '#452F2F'
+                }}
+                whileTap={{ scale: 0.95 }}
+              >
+                BACK TO HOME
+              </motion.a>
+            </motion.div>
           </motion.div>
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="md:hidden flex flex-col justify-center items-center w-8 h-8 cursor-pointer"
+            className="md:hidden flex flex-col justify-center items-center w-8 h-8 cursor-pointer mobile-menu-button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             whileTap={{ scale: 0.9 }}
             initial="closed"
@@ -192,7 +270,7 @@ const Navbar = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
-              className="md:hidden mt-6 pb-6"
+              className="md:hidden mt-6 pb-6 mobile-menu-container"
               variants={mobileMenuVariants}
               initial="closed"
               animate="open"
@@ -213,7 +291,8 @@ const Navbar = () => {
                   <motion.a
                     key={item.href}
                     href={item.href}
-                    className="text-lg font-medium tracking-wider py-2 px-4 rounded-lg transition-all duration-300"
+                    onClick={(e) => handleNavClick(e, item.href)}
+                    className="text-lg font-medium tracking-wider py-2 px-4 rounded-lg transition-all duration-300 cursor-pointer mobile-nav-item"
                     style={{ color: '#000000' }}
                     variants={{
                       closed: { x: -20, opacity: 0 },
@@ -225,11 +304,34 @@ const Navbar = () => {
                       transition: { duration: 0.2 }
                     }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
                   </motion.a>
                 ))}
+                
+                {/* Mobile Back to Home Button */}
+                <motion.a
+                  href="#home"
+                  onClick={(e) => handleNavClick(e, '#home')}
+                  className="text-lg font-bold tracking-wider py-3 px-6 rounded-lg transition-all duration-300 text-center border-2 mt-4 cursor-pointer"
+                  style={{ 
+                    backgroundColor: '#452F2F',
+                    color: '#FFFFFF',
+                    borderColor: '#452F2F'
+                  }}
+                  variants={{
+                    closed: { x: -20, opacity: 0 },
+                    open: { x: 0, opacity: 1 }
+                  }}
+                  whileHover={{ 
+                    backgroundColor: 'transparent',
+                    color: '#452F2F',
+                    transition: { duration: 0.2 }
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  BACK TO HOME
+                </motion.a>
               </motion.div>
             </motion.div>
           )}

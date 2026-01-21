@@ -4,6 +4,8 @@
     "less.validate": false,
     "scss.validate": false,
     "css.lint.unknownAtRules": "ignore",
+    "css.lint.unknownProperties": "ignore",
+    "postcss.validate": false,
     "tailwindCSS.includeLanguages": {
         "javascript": "javascript",
         "html": "HTML"
@@ -21,5 +23,8 @@
         "class[Name]*\\s*[:=]\\s*[\"']([^\"']*)[\"']",
         "className\\s*[:=]\\s*[\"']([^\"']*)[\"']",
         "\\bclass\\s*=\\s*[\"']([^\"']*)[\"']"
+    ],
+    "css.customData": [
+        ".vscode/css_custom_data.json"
     ]
 }

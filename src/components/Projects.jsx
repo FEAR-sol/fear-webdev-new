@@ -1,59 +1,73 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import { FadeIn, ScaleIn, ImageReveal, MagneticButton } from './AnimationUtils';
+import { useState, useEffect } from 'react';
+import { FadeIn } from './AnimationUtils';
 
 const Projects = () => {
   const [hoveredProject, setHoveredProject] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
-      category: "Web Development",
-      description: "Modern e-commerce solution with advanced filtering, secure payments, and responsive design for optimal user experience.",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      image: "/web1.png",
-      link: "https://subscrybe-wey4.vercel.app/",
+      title: "Penny Wise",
+      category: "Financial Software",
+      description: "A comprehensive money management system designed to help users track expenses, manage budgets, and achieve financial goals with intuitive interface and smart analytics.",
+      technologies: ["React", "Node.js", "MongoDB", "Chart.js"],
+      image: "/pennywise.png",
+      link: "https://pennywise-tau.vercel.app/",
       status: "Live",
-      color: "#3b82f6"
+      color: "#10b981"
     },
     {
       id: 2,
-      title: "Corporate Website",
-      category: "Web Design",
-      description: "Professional corporate website with modern design, CMS integration, and SEO optimization for maximum visibility.",
-      technologies: ["WordPress", "PHP", "MySQL", "SCSS"],
-      image: "/web2.png",
-      link: "https://pennywise-tau.vercel.app/",
-      status: "Live",
-      color: "#8b5cf6"
+      title: "SJC International Hackathon",
+      category: "Event Platform",
+      description: "Official website for the international hackathon happening in September at College of Engineering. Features registration, event details, and participant management.",
+      technologies: ["Next.js", "TypeScript", "Tailwind", "Firebase"],
+      image: "/SJC.png",
+      link: "#",
+      status: "Coming Soon",
+      color: "#3b82f6"
     },
     {
       id: 3,
-      title: "Portfolio Dashboard",
-      category: "Web Application",
-      description: "Interactive portfolio dashboard with real-time analytics, project management, and client communication features.",
-      technologies: ["Vue.js", "Express", "PostgreSQL", "Socket.io"],
-      image: "/web3.png",
-      link: "https://yashaswi1423.github.io/TechVerse/",
+      title: "Subscrybe",
+      category: "Crypto Management",
+      description: "Advanced cryptocurrency portfolio management software with real-time tracking, analytics, and automated trading features for digital asset management.",
+      technologies: ["React", "Web3.js", "Node.js", "PostgreSQL"],
+      image: "/subscrybe.png",
+      link: "https://subscrybe-wey4.vercel.app/",
       status: "Live",
-      color: "#ec4899"
+      color: "#f59e0b"
     },
     {
       id: 4,
-      title: "SaaS Landing Page",
-      category: "Landing Page",
-      description: "High-converting SaaS landing page with A/B testing, lead generation forms, and integrated analytics tracking.",
-      technologies: ["Next.js", "Tailwind", "Vercel", "Analytics"],
-      image: "/web4.png",
-      link: "https://yashaswi1423.github.io/INT/",
+      title: "TechVerse",
+      category: "Technology Blog",
+      description: "Multiverse of Technology - A comprehensive blog platform covering new technology trends, innovations, and breakthroughs in the tech world with engaging content.",
+      technologies: ["Next.js", "MDX", "Tailwind", "Vercel"],
+      image: "/techverse.png",
+      link: "https://yashaswi1423.github.io/TechVerse/",
       status: "Live",
-      color: "#10b981"
+      color: "#8b5cf6"
     }
   ];
 
   const handleProjectClick = (link) => {
-    window.open(link, '_blank', 'noopener,noreferrer');
+    if (link && link !== '#') {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    }
   };
 
   const containerVariants = {
@@ -251,7 +265,7 @@ const Projects = () => {
 
         {/* Enhanced Projects Grid */}
         <motion.div 
-          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start projects-grid"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -260,16 +274,17 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div 
               key={project.id} 
-              className={`group relative cursor-pointer ${index % 2 === 1 ? 'lg:mt-16' : ''}`}
+              className="group relative cursor-pointer"
               variants={projectVariants}
               onClick={() => handleProjectClick(project.link)}
-              onHoverStart={() => setHoveredProject(project.id)}
-              onHoverEnd={() => setHoveredProject(null)}
-              whileHover={{ 
+              onHoverStart={() => !isMobile && setHoveredProject(project.id)}
+              onHoverEnd={() => !isMobile && setHoveredProject(null)}
+              whileHover={!isMobile ? { 
                 scale: 1.02,
                 y: -12,
                 transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
-              }}
+              } : {}}
+              whileTap={{ scale: 0.98 }}
             >
               {/* Enhanced Card Shadow/Depth */}
               <motion.div 
@@ -296,13 +311,18 @@ const Projects = () => {
                 }}
               >
                 {/* Enhanced Project Image */}
-                <div className="relative h-64 overflow-hidden rounded-t-3xl">
+                <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden rounded-t-3xl">
                   <motion.img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.1 }}
+                    className="w-full h-full object-cover object-center"
+                    style={{ 
+                      objectFit: 'cover',
+                      objectPosition: 'center'
+                    }}
+                    whileHover={!isMobile ? { scale: 1.1 } : {}}
                     transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+                    loading="lazy"
                   />
                   
                   {/* Enhanced Image Overlay */}
@@ -315,9 +335,9 @@ const Projects = () => {
                   
                   {/* Animated Status Badge */}
                   <motion.div 
-                    className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm" 
+                    className="absolute top-2 right-2 sm:top-4 sm:right-4 px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-bold backdrop-blur-sm" 
                     style={{ 
-                      backgroundColor: 'rgba(40, 202, 66, 0.9)', 
+                      backgroundColor: project.status === 'Live' ? 'rgba(40, 202, 66, 0.9)' : 'rgba(249, 115, 22, 0.9)', 
                       color: 'white' 
                     }}
                     initial={{ scale: 0, rotate: -180 }}
@@ -330,7 +350,7 @@ const Projects = () => {
 
                   {/* Enhanced Project Number */}
                   <motion.div 
-                    className="absolute top-4 left-4 w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold backdrop-blur-sm" 
+                    className="absolute top-2 left-2 sm:top-4 sm:left-4 w-8 h-8 sm:w-12 sm:h-12 rounded-full flex items-center justify-center text-sm sm:text-lg font-bold backdrop-blur-sm" 
                     style={{ 
                       backgroundColor: 'rgba(230, 225, 237, 0.9)', 
                       color: '#452F2F' 
@@ -371,11 +391,11 @@ const Projects = () => {
                 </div>
 
                 {/* Enhanced Project Content */}
-                <div className="p-8">
+                <div className="p-4 sm:p-6 md:p-8">
                   {/* Category and Title */}
-                  <div className="mb-4">
+                  <div className="mb-3 sm:mb-4">
                     <motion.div 
-                      className="text-sm font-semibold mb-2 tracking-wide" 
+                      className="text-xs sm:text-sm font-semibold mb-2 tracking-wide" 
                       style={{ color: project.color }}
                       whileHover={{ x: 4 }}
                       transition={{ duration: 0.2 }}
@@ -383,7 +403,7 @@ const Projects = () => {
                       {project.category}
                     </motion.div>
                     <motion.h3 
-                      className="text-2xl font-bold leading-tight" 
+                      className="text-xl sm:text-2xl lg:text-2xl font-bold leading-tight project-card-title" 
                       style={{ color: '#000000' }}
                       whileHover={{ color: project.color }}
                       transition={{ duration: 0.3 }}
@@ -394,7 +414,7 @@ const Projects = () => {
 
                   {/* Description */}
                   <motion.p 
-                    className="text-base leading-relaxed mb-6 font-light" 
+                    className="text-sm sm:text-base leading-relaxed mb-4 sm:mb-6 font-light text-justify" 
                     style={{ color: '#424242' }}
                     initial={{ opacity: 0.8 }}
                     whileHover={{ opacity: 1 }}
@@ -403,11 +423,11 @@ const Projects = () => {
                   </motion.p>
 
                   {/* Enhanced Technologies */}
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-1 sm:gap-2 mb-4 sm:mb-6">
                     {project.technologies.map((tech, techIndex) => (
                       <motion.span 
                         key={techIndex}
-                        className="px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm cursor-pointer"
+                        className="px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-medium backdrop-blur-sm cursor-pointer"
                         style={{ 
                           backgroundColor: 'rgba(69, 47, 47, 0.1)', 
                           color: '#452F2F' 
@@ -429,14 +449,14 @@ const Projects = () => {
 
                   {/* Enhanced View Project Link */}
                   <motion.div 
-                    className="flex items-center gap-2 text-sm font-semibold" 
+                    className="flex items-center gap-2 text-xs sm:text-sm font-semibold" 
                     style={{ color: project.color }}
-                    whileHover={{ gap: 16 }}
+                    whileHover={{ gap: 12 }}
                     transition={{ duration: 0.3 }}
                   >
                     <span>View Project</span>
                     <motion.svg 
-                      className="w-4 h-4" 
+                      className="w-3 h-3 sm:w-4 sm:h-4" 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
